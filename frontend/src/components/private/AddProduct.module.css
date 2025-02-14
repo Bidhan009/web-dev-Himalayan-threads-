@@ -1,0 +1,118 @@
+/* AddProduct.module.css */
+.container {
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* ✅ Close Button (Now Properly Positioned) */
+.closeBtn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: #333;
+    transition: color 0.3s ease;
+    padding: 5px;
+}
+
+.closeBtn:hover {
+    color: #b22222;
+}
+
+/* ✅ Header Styling */
+.title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #2c3e50;
+    text-align: center;
+}
+
+/* ✅ Form Container */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* ✅ Input Group */
+.inputGroup {
+    text-align: left;
+}
+
+/* ✅ Labels */
+.inputGroup label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* ✅ Input Fields */
+.inputGroup input,
+.inputGroup textarea,
+.inputGroup select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* ✅ Textarea */
+.inputGroup textarea {
+    resize: vertical;
+    height: 80px;
+}
+
+/* ✅ File Input */
+.inputGroup input[type="file"] {
+    border: none;
+}
+
+/* ✅ Submit Button */
+.submitBtn {
+    width: 100%;
+    padding: 12px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+.submitBtn:hover {
+    background-color: #218838;
+}
+
+/* ✅ Responsive Fixes */
+@media screen and (max-width: 768px) {
+    .container {
+        width: 90%;
+        max-width: 400px;
+        padding: 15px;
+    }
+    
+    .title {
+        font-size: 20px;
+    }
+
+    .closeBtn {
+        font-size: 20px;
+        top: 8px;
+        right: 8px;
+    }
+}
