@@ -1,0 +1,35 @@
+.cartSection {
+    padding: 20px;
+}
+
+.cartGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.cartItem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+.cartItem img {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+}
+
+/* ✅ Responsive */
+@media (max-width: 768px) {
+    .cartGrid {
+        flex-direction: column;
+    }
+
+    .cartItem img {
+        width: 60px;
+        height: 60px;
+    }
+}
