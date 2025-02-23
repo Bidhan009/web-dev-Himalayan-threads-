@@ -1,92 +1,44 @@
-/* ✅ Profile Section */
 .profileSection {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    background: white;
-    padding: 30px;
+    padding: 20px;
+    background-color: #fff;
     border-radius: 10px;
-    max-width: 500px;
-    margin: 40px auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 400px;
+    margin: auto;
 }
 
-/* ✅ Profile Picture */
-.profilePicture {
-    position: relative;
-    width: 130px;
-    height: 130px;
+.profileSection h3 {
+    font-size: 24px;
+    color: #333;
     margin-bottom: 15px;
 }
 
-.profilePicture img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 4px solid #007bff;
+.profileDetails {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
 }
 
-/* ✅ Camera Icon */
-.uploadIcon {
-    position: absolute;
-    bottom: 5px;
-    right: 5px;
-    background: white;
-    border-radius: 50%;
-    padding: 5px;
-    cursor: pointer;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+.profileDetails svg {
+    color: #555;
+    margin-bottom: 10px;
 }
 
-.uploadIcon input {
-    display: none;
+.profileDetails h4 {
+    font-size: 22px;
+    color: #444;
+    margin-bottom: 5px;
 }
 
-/* ✅ Profile Info */
-.profileSection p {
+.profileDetails p {
     font-size: 16px;
-    color: #333;
-    margin: 5px 0;
+    color: #666;
 }
 
-.profileSection strong {
-    color: #000;
-}
-
-/* ✅ Update Profile Button */
-.updateProfileBtn {
-    background-color: #28a745;
-    color: white;
-    padding: 10px 20px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 15px;
-    font-weight: bold;
-    transition: 0.3s;
-}
-
-.updateProfileBtn:hover {
-    background-color: #218838;
-}
-
-/* ✅ Responsive Design */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .profileSection {
         width: 90%;
-        padding: 20px;
-    }
-
-    .profilePicture {
-        width: 100px;
-        height: 100px;
-    }
-
-    .updateProfileBtn {
-        width: 100%;
     }
 }
