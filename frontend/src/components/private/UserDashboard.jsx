@@ -4,6 +4,8 @@ import {
     getUserProfile,
     getAllProductsForUsers,
     getProductsByCategory,
+    addToCartAPI,
+    getCartItems
 } from "../../api/userAPI";
 import { API } from "../../environment";
 import styles from "./UserDashboard.module.css";
@@ -13,21 +15,19 @@ import {
     FaShoppingCart,
     FaSignOutAlt,
     FaHome,
-    FaCaretDown,
-    FaTimes,
+    FaCaretDown
 } from "react-icons/fa";
 import Cart from "./Cart";
 import UserProfile from "./UserProfile";
 
 const UserDashboard = () => {
     const navigate = useNavigate();
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState(null);
     const [activeTab, setActiveTab] = useState("home");
     const [products, setProducts] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState("All");
     const [showDropdown, setShowDropdown] = useState(false);
     const [cart, setCart] = useState([]);
-    const [selectedProduct, setSelectedProduct] = useState(null);
 
     useEffect(() => {
         fetchUserProfile();
@@ -39,6 +39,7 @@ const UserDashboard = () => {
             const userData = await getUserProfile();
             if (userData) {
                 setUser(userData);
+                fetchCart(userData.userId);
             } else {
                 toast.error("Failed to load user profile.");
             }
@@ -61,9 +62,38 @@ const UserDashboard = () => {
         }
     };
 
-    const addToCart = (product) => {
-        setCart((prevCart) => [...prevCart, product]);
-        toast.success(`${product.name} added to cart!`);
+    const fetchCart = async (userId) => {
+        try {
+            const cartItems = await getCartItems(userId);
+            setCart(cartItems);
+        } catch (error) {
+            toast.error("Failed to load cart.");
+        }
+    };
+
+    const addToCart = async (product) => {
+        if (!user) {
+            toast.error("Please log in to add items to cart.");
+            return;
+        }
+
+        try {
+            await addToCartAPI(user.userId, product.id);
+            const updatedCart = cart.map(item =>
+                item.id === product.id
+                    ? { ...item, quantity: item.quantity + 1 }
+                    : item
+            );
+
+            if (!updatedCart.some(item => item.id === product.id)) {
+                updatedCart.push({ ...product, quantity: 1 });
+            }
+
+            setCart(updatedCart);
+            toast.success(`${product.name} added to cart!`);
+        } catch (error) {
+            toast.error("Error adding product to cart.");
+        }
     };
 
     return (
@@ -114,30 +144,15 @@ const UserDashboard = () => {
                                 </button>
                                 {showDropdown && (
                                     <div className={styles.dropdownMenu}>
-                                        <button
-                                            onClick={() => fetchProducts("All")}
-                                            className={selectedCategory === "All" ? styles.selectedCategory : ""}
-                                        >
-                                            All
-                                        </button>
-                                        <button
-                                            onClick={() => fetchProducts("Men")}
-                                            className={selectedCategory === "Men" ? styles.selectedCategory : ""}
-                                        >
-                                            Men
-                                        </button>
-                                        <button
-                                            onClick={() => fetchProducts("Women")}
-                                            className={selectedCategory === "Women" ? styles.selectedCategory : ""}
-                                        >
-                                            Women
-                                        </button>
-                                        <button
-                                            onClick={() => fetchProducts("Unisex")}
-                                            className={selectedCategory === "Unisex" ? styles.selectedCategory : ""}
-                                        >
-                                            Unisex
-                                        </button>
+                                        {["All", "Men", "Women", "Unisex"].map((category) => (
+                                            <button
+                                                key={category}
+                                                onClick={() => fetchProducts(category)}
+                                                className={selectedCategory === category ? styles.selectedCategory : ""}
+                                            >
+                                                {category}
+                                            </button>
+                                        ))}
                                     </div>
                                 )}
                             </div>
@@ -145,26 +160,14 @@ const UserDashboard = () => {
 
                         <div className={styles.productGrid}>
                             {products.map((product) => (
-                                <div
-                                    key={product.id}
-                                    className={styles.productCard}
-                                    onClick={() => setSelectedProduct(product)}
-                                >
-                                    <img
-                                        src={`${API.BASE_URL}${product.image_url}`}
-                                        alt={product.name}
-                                    />
+                                <div key={product.id} className={styles.productCard}>
+                                    <img src={`${API.BASE_URL}${product.image_url}`} alt={product.name} className={styles.productImage} />
                                     <h4>{product.name}</h4>
-                                    <p>{product.description}</p>
-                                    <p>
-                                        <strong>${product.price}</strong>
-                                    </p>
+                                    <p className={styles.productDescription}>{product.description}</p>
+                                    <p className={styles.productPrice}><strong>${product.price}</strong></p>
                                     <button
                                         className={styles.addToCartBtn}
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            addToCart(product);
-                                        }}
+                                        onClick={() => addToCart(product)}
                                     >
                                         Add to Cart
                                     </button>
@@ -174,36 +177,7 @@ const UserDashboard = () => {
                     </section>
                 )}
 
-                {selectedProduct && (
-                    <section className={styles.productDetails}>
-                        <button
-                            className={styles.closeBtn}
-                            onClick={() => setSelectedProduct(null)}
-                        >
-                            <FaTimes />
-                        </button>
-                        <img
-                            src={`${API.BASE_URL}${selectedProduct.image_url}`}
-                            alt={selectedProduct.name}
-                        />
-                        <h2>{selectedProduct.name}</h2>
-                        <p>{selectedProduct.description}</p>
-                        <p>
-                            <strong>${selectedProduct.price}</strong>
-                        </p>
-                        <button
-                            className={styles.addToCartBtn}
-                            onClick={() => addToCart(selectedProduct)}
-                        >
-                            Add to Cart
-                        </button>
-                    </section>
-                )}
-
-                {/* Use the Cart component */}
-                {activeTab === "cart" && <Cart cart={cart} setCart={setCart} />}
-
-                {/* Use the UserProfile component */}
+                {activeTab === "cart" && <Cart cart={cart} setCart={setCart} user={user} />}
                 {activeTab === "profile" && <UserProfile user={user} />}
             </main>
         </div>
