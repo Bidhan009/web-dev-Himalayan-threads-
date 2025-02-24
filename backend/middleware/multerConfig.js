@@ -2,23 +2,29 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 
-// ✅ Ensure uploads directory exists
+// 🔹 Ensure uploads directory exists
 const uploadDir = path.join(__dirname, "../uploads");
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true });
 }
 
-// ✅ Storage engine
+// 🔹 Generate Safe File Names (Removes Special Characters)
+const sanitizeFileName = (originalname) => {
+    return originalname.replace(/\s+/g, "-").replace(/[^a-zA-Z0-9.-]/g, "");
+};
+
+// 🔹 Storage Engine
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, uploadDir);
     },
     filename: (req, file, cb) => {
-        cb(null, `${Date.now()}-${file.originalname}`); // Append timestamp to filename
+        const safeFilename = sanitizeFileName(file.originalname);
+        cb(null, `${Date.now()}-${safeFilename}`);
     },
 });
 
-// ✅ Allow only images
+// 🔹 Allow Only Images
 const fileFilter = (req, file, cb) => {
     const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
     if (allowedTypes.includes(file.mimetype)) {
@@ -28,11 +34,15 @@ const fileFilter = (req, file, cb) => {
     }
 };
 
-// ✅ Initialize Multer
+// 🔹 Initialize Multer with File Size Limit & Error Handling
 const upload = multer({
     storage,
     fileFilter,
     limits: { fileSize: 5 * 1024 * 1024 }, // 5MB file size limit
+    onError: (err, next) => {
+        console.error("Multer Error:", err);
+        next(err);
+    },
 });
 
 module.exports = upload;

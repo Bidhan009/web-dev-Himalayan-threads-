@@ -2,22 +2,12 @@
 .profileContainer {
     max-width: 600px;
     margin: 20px auto;
-    background: rgba(255, 255, 255, 0.15); /* Glassmorphism */
+    background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(10px);
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     text-align: center;
-    transition: 0.3s ease-in-out;
-}
-
-/* 📌 Profile Title */
-.profileTitle {
-    font-size: 28px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 15px;
-    text-transform: uppercase;
 }
 
 /* 📌 Profile Card */
@@ -26,11 +16,6 @@
     padding: 25px;
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s;
-}
-
-.profileCard:hover {
-    transform: scale(1.02);
 }
 
 /* 📌 Profile Image */
@@ -40,44 +25,64 @@
     border-radius: 50%;
     object-fit: cover;
     border: 4px solid #4CAF50;
-    transition: 0.3s;
+    cursor: pointer;
 }
 
-.profileImage:hover {
-    border-color: #2E8B57;
-    transform: scale(1.1);
+.profilePicUpload {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
 }
 
-/* 📌 Profile Text */
-.profileCard h3 {
-    margin-top: 15px;
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
+.uploadIcon {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    color: white;
+    background: #4CAF50;
+    border-radius: 50%;
+    padding: 5px;
+    font-size: 16px;
 }
 
-.profileCard p {
-    font-size: 18px;
-    color: #555;
-    margin: 5px 0;
+/* 📌 Input Fields */
+.inputField {
+    width: 90%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* 📌 Buttons */
+.editButton, .saveButton, .cancelButton {
+    margin: 10px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.editButton {
+    background: #007bff;
+    color: white;
+}
+
+.saveButton {
+    background: #28a745;
+    color: white;
+}
+
+.cancelButton {
+    background: #dc3545;
+    color: white;
 }
 
 /* 📌 Responsive Design */
 @media (max-width: 768px) {
     .profileContainer {
         max-width: 90%;
-    }
-
-    .profileImage {
-        width: 100px;
-        height: 100px;
-    }
-
-    .profileCard h3 {
-        font-size: 20px;
-    }
-
-    .profileCard p {
-        font-size: 16px;
     }
 }
