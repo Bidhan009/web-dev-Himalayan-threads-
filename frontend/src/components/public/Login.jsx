@@ -16,11 +16,8 @@ function Login() {
             const response = await axios.post(`${API.BASE_URL}/api/user/login`, data);
             
             if (response.status === 200) {
-                // ✅ Store token
                 localStorage.setItem("userToken", response.data.token);
                 toast.success("Login successful!");
-
-                // ✅ Redirect to User Dashboard (Fixed Route)
                 navigate("/user-dashboard");
             }
         } catch (error) {
@@ -29,9 +26,17 @@ function Login() {
         }
     };
 
+    // ✅ Function to navigate to Home Page
+    const handleClose = () => {
+        navigate("/"); // Change "/" to the correct route for your home/landing page
+    };
+
     return (
         <div className={styles.container}>
             <div className={styles.formBox}>
+                {/* ✅ Crossbar Button that Navigates to Home Page */}
+                <button className={styles.crossbar} onClick={handleClose}>✖</button>
+
                 <h2 className={styles.title}>Login</h2>
                 <form onSubmit={handleSubmit(onSubmit)}>
 

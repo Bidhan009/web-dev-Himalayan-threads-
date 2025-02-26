@@ -46,7 +46,7 @@ const UserProfile = ({ user, setUser }) => {
             setUser({ ...user, ...formData });
             setIsEditing(false);
         } catch (error) {
-            toast.error("Failed to update profile.");
+            // toast.error("Failed to update profile.");
         }
     };
 

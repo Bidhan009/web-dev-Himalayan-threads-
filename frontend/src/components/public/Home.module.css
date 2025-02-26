@@ -1,4 +1,4 @@
-/* home-content  */
+/* home-content */
 .content {
     height: 90vh;
     width: 100%;
@@ -7,31 +7,52 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    position: relative; /* Ensures child elements can be positioned absolutely */
+    background: url('/src/assets/homePageImage111.png') no-repeat center center;
+    background-size: cover; /* Ensures the image covers the entire background */
+}
+
+/* Optional: Adding a semi-transparent overlay for better readability */
+.content::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Adjust opacity as needed */
+    z-index: 1;
 }
 
 .signup-btn {
-    background-color: #cf31d7;
+    background-color: #0c0d04;
+    color:#16cfc3;
     border: none;
-    padding: 13px 27px 13px 27px;
+    padding: 13px 27px;
     border-radius: 7px;
     cursor: pointer;
     margin-top: 10px;
     transition: background-color 0.3s ease;
+    position: relative;
+    z-index: 2; /* Ensures the button is above the overlay */
 }
 
 .signup-btn:hover {
-    background-color: #acf2b2;
+    background-color: #d91bc9;
 }
-
 
 .main-heading .title {
-    color: #120b46;
+    color: #16cfc3;
 }
-
+.paragraph .description{
+    color: #16cfc3;
+}
 .main-heading {
     display: flex;
     align-items: center;
     padding-left: -20px;
+    position: relative;
+    z-index: 2;
 }
 
 .child-content {
@@ -41,6 +62,8 @@
     width: 100%;
     height: 500px;
     margin: 15px;
+    position: relative;
+    z-index: 2;
 }
 
 .home-content {
@@ -49,17 +72,16 @@
     flex-direction: column;
     justify-content: center;
     margin-right: 80px;
+    position: relative;
+    z-index: 2;
 }
 
 .home-image {
     width: 40%;
-    background: url(/src/assets/homePageImage.jpg);
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
+    display: none; /* Removed individual background since we now use the full-page background */
 }
 
-@media(max-width : 500px) {
+@media (max-width: 500px) {
     .main-heading {
         font-size: large;
     }

@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import {
     getUserProfile,
     getAllProductsForUsers,
-    getProductsByCategory,
     addToCartAPI,
     getCartItems
 } from "../../api/userAPI";
@@ -14,8 +13,7 @@ import {
     FaUserCircle,
     FaShoppingCart,
     FaSignOutAlt,
-    FaHome,
-    FaCaretDown
+    FaHome
 } from "react-icons/fa";
 import Cart from "./Cart";
 import UserProfile from "./UserProfile";
@@ -25,9 +23,8 @@ const UserDashboard = () => {
     const [user, setUser] = useState(null);
     const [activeTab, setActiveTab] = useState("home");
     const [products, setProducts] = useState([]);
-    const [selectedCategory, setSelectedCategory] = useState("All");
-    const [showDropdown, setShowDropdown] = useState(false);
     const [cart, setCart] = useState([]);
+    const [selectedProduct, setSelectedProduct] = useState(null);
 
     useEffect(() => {
         fetchUserProfile();
@@ -48,14 +45,9 @@ const UserDashboard = () => {
         }
     };
 
-    const fetchProducts = async (category = "All") => {
+    const fetchProducts = async () => {
         try {
-            setSelectedCategory(category);
-            setShowDropdown(false);
-            const productsData =
-                category === "All"
-                    ? await getAllProductsForUsers()
-                    : await getProductsByCategory(category);
+            const productsData = await getAllProductsForUsers();
             setProducts(productsData);
         } catch (error) {
             toast.error("Failed to load products.");
@@ -79,17 +71,7 @@ const UserDashboard = () => {
 
         try {
             await addToCartAPI(user.userId, product.id);
-            const updatedCart = cart.map(item =>
-                item.id === product.id
-                    ? { ...item, quantity: item.quantity + 1 }
-                    : item
-            );
-
-            if (!updatedCart.some(item => item.id === product.id)) {
-                updatedCart.push({ ...product, quantity: 1 });
-            }
-
-            setCart(updatedCart);
+            setCart([...cart, product]);
             toast.success(`${product.name} added to cart!`);
         } catch (error) {
             toast.error("Error adding product to cart.");
@@ -133,41 +115,20 @@ const UserDashboard = () => {
             <main className={styles.content}>
                 {activeTab === "home" && (
                     <section className={styles.homeSection}>
-                        <div className={styles.homeHeader}>
-                            <h3>Available Products</h3>
-                            <div className={styles.dropdownContainer}>
-                                <button
-                                    className={styles.dropdownBtn}
-                                    onClick={() => setShowDropdown(!showDropdown)}
-                                >
-                                    {selectedCategory} <FaCaretDown />
-                                </button>
-                                {showDropdown && (
-                                    <div className={styles.dropdownMenu}>
-                                        {["All", "Men", "Women", "Unisex"].map((category) => (
-                                            <button
-                                                key={category}
-                                                onClick={() => fetchProducts(category)}
-                                                className={selectedCategory === category ? styles.selectedCategory : ""}
-                                            >
-                                                {category}
-                                            </button>
-                                        ))}
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-
+                        <h3>Available Products</h3>
                         <div className={styles.productGrid}>
                             {products.map((product) => (
-                                <div key={product.id} className={styles.productCard}>
-                                    <img src={`${API.BASE_URL}${product.image_url}`} alt={product.name} className={styles.productImage} />
+                                <div key={product.id} className={styles.productCard} onClick={() => setSelectedProduct(product)}>
+                                    <img 
+                                        src={`${API.BASE_URL}${product.image_url}`} 
+                                        alt={product.name} 
+                                        className={styles.fullProductImage}
+                                    />
                                     <h4>{product.name}</h4>
-                                    <p className={styles.productDescription}>{product.description}</p>
                                     <p className={styles.productPrice}><strong>${product.price}</strong></p>
                                     <button
                                         className={styles.addToCartBtn}
-                                        onClick={() => addToCart(product)}
+                                        onClick={(e) => {e.stopPropagation(); addToCart(product);}}
                                     >
                                         Add to Cart
                                     </button>
@@ -176,7 +137,18 @@ const UserDashboard = () => {
                         </div>
                     </section>
                 )}
-
+                {selectedProduct && (
+                    <div className={styles.productModal} onClick={() => setSelectedProduct(null)}>
+                        <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+                            <img src={`${API.BASE_URL}${selectedProduct.image_url}`} alt={selectedProduct.name} />
+                            <h2>{selectedProduct.name}</h2>
+                            <p>{selectedProduct.description}</p>
+                            <p><strong>Price: ${selectedProduct.price}</strong></p>
+                            <button className={styles.addToCartBtn} onClick={() => addToCart(selectedProduct)}>Add to Cart</button>
+                            <button className={styles.closeBtn} onClick={() => setSelectedProduct(null)}>Close</button>
+                        </div>
+                    </div>
+                )}
                 {activeTab === "cart" && <Cart cart={cart} setCart={setCart} user={user} />}
                 {activeTab === "profile" && <UserProfile user={user} />}
             </main>

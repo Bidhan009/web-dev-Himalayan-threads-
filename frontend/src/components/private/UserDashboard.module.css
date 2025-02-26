@@ -2,27 +2,28 @@
 .dashboardContainer {
     display: flex;
     height: 100vh;
-    background-color: #f9f9f9;
+    background-color: #f4f4f9;
+    font-family: 'Poppins', sans-serif;
 }
 
 /* ✅ Sidebar Styling */
 .sidebar {
-    width: 250px;
-    background-color: #111827;
+    width: 260px;
+    background-color: #1e293b;
     color: white;
-    padding: 20px;
+    padding: 25px;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 20px;
     align-items: center;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
 }
 
 .brand {
-    font-size: 22px;
+    font-size: 24px;
     font-weight: bold;
     color: #38bdf8;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 .sidebar button {
@@ -30,20 +31,20 @@
     background: none;
     color: white;
     border: none;
-    font-size: 16px;
-    padding: 12px;
+    font-size: 17px;
+    padding: 14px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     cursor: pointer;
     transition: background 0.3s ease;
     text-align: left;
+    border-radius: 8px;
 }
 
 .sidebar button:hover,
 .sidebar .active {
-    background-color: #1f2937;
-    border-radius: 5px;
+    background-color: #334155;
 }
 
 .logoutBtn {
@@ -51,7 +52,8 @@
     background-color: #ef4444;
     color: white;
     font-weight: bold;
-    border-radius: 5px;
+    border-radius: 8px;
+    padding: 12px;
     transition: 0.3s ease;
 }
 
@@ -62,157 +64,63 @@
 /* ✅ Main Content */
 .content {
     flex: 1;
-    padding: 20px;
+    padding: 30px;
     overflow-y: auto;
-    position: relative;
-    z-index: 1;
+    background-color: #ffffff;
 }
 
-/* ✅ Home Section */
-.homeSection {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.homeHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    z-index: 5;
-}
-
-/* ✅ Dropdown Wrapper */
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-/* ✅ Category Button */
-.dropdownBtn {
-    background-color: #2563eb;
-    color: white;
-    padding: 12px 18px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    transition: background 0.3s ease;
-    position: relative;
-    z-index: 20; /* ✅ Ensures it stays above other elements */
-}
-
-.dropdownBtn:hover {
-    background-color: #1e40af;
-}
-
-/* ✅ Fixed Dropdown Menu Layout */
-.dropdownContent {
-    position: absolute;
-    top: 110%;
-    left: 0;
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    width: 180px;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
-    z-index: 100; /* ✅ Makes sure it is on top of products */
-    padding: 5px 0;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(10px);
-    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
-}
-
-/* ✅ Dropdown Visibility - Only Show When Active */
-.showDropdown {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-
-/* ✅ Dropdown Buttons */
-.dropdownContent button {
-    padding: 12px;
-    border: none;
-    background: white;
-    cursor: pointer;
-    font-size: 15px;
-    text-align: left;
-    width: 100%;
-    transition: background 0.2s ease;
-    border-radius: 0; /* ✅ Keeps all buttons the same shape */
-    display: block;
-}
-
-.dropdownContent button:hover {
-    background: #f3f4f6;
-}
-
-/* ✅ Ensures dropdown stays visible when hovered */
-.dropdown:hover .dropdownContent,
-.dropdown:focus-within .dropdownContent {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-
-/* ✅ Product Grid (3 per row) */
+/* ✅ Product Grid */
 .productGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 25px;
 }
 
 .productCard {
-    background: white;
-    border-radius: 10px;
-    padding: 15px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     text-align: center;
-    transition: transform 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s;
     cursor: pointer;
 }
 
 .productCard:hover {
     transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
-.productCard img {
+.fullProductImage {
     width: 100%;
-    height: 180px;
+    height: 200px;
     object-fit: cover;
-    border-radius: 5px;
+    border-radius: 8px;
 }
 
-.productCard h4 {
-    margin: 10px 0;
+.productName {
     font-size: 18px;
+    font-weight: 600;
+    margin: 10px 0;
 }
 
-.productCard p {
-    font-size: 14px;
-    color: #555;
+.productPrice {
+    font-size: 16px;
+    color: #16a34a;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
-/* ✅ Add to Cart Button */
 .addToCartBtn {
     background-color: #16a34a;
     color: white;
     border: none;
-    padding: 10px;
+    padding: 12px;
     width: 100%;
-    border-radius: 5px;
-    font-size: 14px;
+    border-radius: 8px;
+    font-size: 15px;
     cursor: pointer;
     transition: background 0.3s;
-    margin-top: 10px;
 }
 
 .addToCartBtn:hover {
@@ -226,143 +134,63 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.6);
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1000;
 }
 
 .modalContent {
     background: white;
-    padding: 20px;
-    border-radius: 8px;
+    padding: 25px;
+    border-radius: 12px;
     text-align: center;
     max-width: 500px;
     position: relative;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .modalContent img {
     width: 100%;
-    max-height: 300px;
-    object-fit: cover;
+    max-height: 350px;
+    object-fit: contain;
     border-radius: 8px;
 }
 
-.closeIcon {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    cursor: pointer;
-    font-size: 20px;
-    color: #333;
-}
-
-/* ✅ Cart Section */
-.cartSection {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.cartItem {
-    display: flex;
-    align-items: center;
-    background: white;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    gap: 15px;
-}
-
-.cartItem img {
-    width: 80px;
-    height: 80px;
-    border-radius: 5px;
-    object-fit: cover;
-}
-
-.removeBtn {
-    background-color: #f43f5e;
+.closeBtn {
+    background-color: #ef4444;
     color: white;
     border: none;
-    padding: 8px;
-    font-size: 14px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background 0.3s ease;
-}
-
-.removeBtn:hover {
-    background-color: #be123c;
-}
-
-/* ✅ Profile Section */
-.profileSection {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    background: white;
-    padding: 30px;
-    border-radius: 10px;
-    max-width: 500px;
-    margin: 40px auto;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* ✅ Profile Picture */
-.profilePicture {
-    position: relative;
-    width: 130px;
-    height: 130px;
-    margin-bottom: 15px;
-}
-
-.profilePicture img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 4px solid #007bff;
-}
-
-/* ✅ Camera Icon */
-.uploadIcon {
-    position: absolute;
-    bottom: 5px;
-    right: 5px;
-    background: white;
-    border-radius: 50%;
-    padding: 5px;
-    cursor: pointer;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-}
-
-.uploadIcon input {
-    display: none;
-}
-
-/* ✅ Update Profile Button */
-.updateProfileBtn {
-    background-color: #16a34a;
-    color: white;
-    padding: 10px 20px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    padding: 12px;
     margin-top: 15px;
-    font-weight: bold;
-    transition: 0.3s;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background 0.3s;
 }
 
-.updateProfileBtn:hover {
-    background-color: #15803d;
+.closeBtn:hover {
+    background-color: #dc2626;
 }
 
 /* ✅ Responsive Design */
 @media (max-width: 900px) {
     .productGrid {
         grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+    
+    .modalContent {
+        max-width: 90%;
+    }
+}
+
+@media (max-width: 600px) {
+    .sidebar {
+        width: 200px;
+        padding: 15px;
+    }
+    
+    .productGrid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     }
 }
